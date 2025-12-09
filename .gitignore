@@ -1,0 +1,11 @@
+# Node.js
+node_modules/
+
+# Python
+*.pyc
+__pycache__/
+
+# Otros archivos temporales
+*.log
+.DS_Store
+*.env
