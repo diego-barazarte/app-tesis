@@ -21,7 +21,7 @@ function Home() {
       alignItems: 'flex-start',
       justifyContent: 'flex-start',
       height: '100%',
-      marginLeft: '2%', // Acercamos más a la izquierda
+      marginLeft: '2%',
     },
     title: {
       fontSize: '20px',
