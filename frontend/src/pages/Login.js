@@ -4,8 +4,13 @@ function Login() {
   const navigate = useNavigate();
 
   const seleccionarRol = (rol) => {
-    navigate(`/${rol}/home`);
+    if (rol === "padres") {
+      navigate("/padres/home-padres");
+    } else {
+      navigate("/lideres/home");
+    }
   };
+  
 
   return (
     <div style={{ textAlign: "center", marginTop: "100px" }}>

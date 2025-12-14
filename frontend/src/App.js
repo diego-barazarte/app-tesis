@@ -4,6 +4,9 @@ import Home from "./pages/Home";
 import Profile from "./pages/Profile";
 import Sidebar from "./components/Sidebar";
 import Asistencia from "./pages/Asistencia";
+import HomePadres from "./pages/HomePadres";
+import RegistroHijo from "./pages/RegistroHijo";
+
 
 function Layout() {
   return (
@@ -25,9 +28,12 @@ function App() {
 
         <Route path="/:rol" element={<Layout />}>
           <Route path="home" element={<Home />} />
+          <Route path="home-padres" element={<HomePadres />} />
+          <Route path="registro-hijo" element={<RegistroHijo />} />
           <Route path="asistencia" element={<Asistencia />} />
           <Route path="profile" element={<Profile />} />
         </Route>
+        
       </Routes>
     </Router>
   );

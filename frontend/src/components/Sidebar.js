@@ -3,19 +3,30 @@ import { Link, useParams } from "react-router-dom";
 function Sidebar() {
   const { rol } = useParams();
 
-  if (rol !== "lideres") return null;
+  if (!rol) return null;
+
+  const inicioPath =
+    rol === "padres" ? `/${rol}/home-padres` : `/${rol}/home`;
 
   return (
     <div style={styles.sidebar}>
-      <h3>Líder</h3>
+      <h3>{rol === "lideres" ? "Líder" : "Padre"}</h3>
 
-      <Link to={`/${rol}/home`} style={styles.link}>
+      <Link to={inicioPath} style={styles.link}>
         Inicio
       </Link>
 
-      <Link to={`/${rol}/asistencia`} style={styles.link}>
-        Tomar asistencia
-      </Link>
+      {rol === "lideres" && (
+        <Link to={`/${rol}/asistencia`} style={styles.link}>
+          Tomar asistencia
+        </Link>
+      )}
+
+      {rol === "padres" && (
+        <Link to={`/${rol}/registro-hijo`} style={styles.link}>
+          Registrar hijo
+        </Link>
+      )}
 
       <Link to={`/${rol}/profile`} style={styles.link}>
         Perfil
@@ -30,7 +41,7 @@ const styles = {
     backgroundColor: "#222",
     color: "white",
     padding: "20px",
-    height: "100vh",   // ocupa toda la altura
+    height: "100vh",
   },
   link: {
     display: "block",
