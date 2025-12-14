@@ -1,11 +1,10 @@
 function Profile() {
-    return (
-      <div>
-        <h1>Perfil</h1>
-        <p>Este es tu perfil.</p>
-      </div>
-    );
-  }
-  
-  export default Profile;
-  
+  return (
+    <div>
+      <h2>Perfil</h2>
+      <p>Datos del usuario</p>
+    </div>
+  );
+}
+
+export default Profile;

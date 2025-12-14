@@ -4,7 +4,7 @@ function Login() {
   const navigate = useNavigate();
 
   const seleccionarRol = (rol) => {
-    navigate(`/home/${rol}`);
+    navigate(`/${rol}/home`);
   };
 
   return (

@@ -1,49 +1,42 @@
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 function Sidebar() {
+  const { rol } = useParams();
+
+  if (rol !== "lideres") return null;
+
   return (
     <div style={styles.sidebar}>
-      <ul style={styles.list}>
-        <li style={styles.listItem}>
-          <Link to="/" style={styles.link}>Inicio</Link>
-        </li>
-        <li style={styles.listItem}>
-          <Link to="/profile" style={styles.link}>Perfil</Link>
-        </li>
-      </ul>
+      <h3>Líder</h3>
+
+      <Link to={`/${rol}/home`} style={styles.link}>
+        Inicio
+      </Link>
+
+      <Link to={`/${rol}/asistencia`} style={styles.link}>
+        Tomar asistencia
+      </Link>
+
+      <Link to={`/${rol}/profile`} style={styles.link}>
+        Perfil
+      </Link>
     </div>
   );
 }
 
 const styles = {
   sidebar: {
-    width: '15%',
-    backgroundColor: '#333',
-    color: 'white',
-    paddingTop: '20px',
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    height: '100vh',
-    position: 'fixed',
-  },
-  list: {
-    listStyleType: 'none',
-    padding: 0,
-  },
-  listItem: {
-    margin: '20px 0',
+    width: "15%",
+    backgroundColor: "#222",
+    color: "white",
+    padding: "20px",
+    height: "100vh",   // ocupa toda la altura
   },
   link: {
-    color: 'white',
-    textDecoration: 'none',
-    fontSize: '18px',
-    padding: '10px 20px',
-    display: 'block',
-    textAlign: 'center',
-    width: '100%',
-    borderRadius: '4px',
-    transition: 'background 0.3s',
+    display: "block",
+    color: "white",
+    textDecoration: "none",
+    margin: "10px 0",
   },
 };
 

@@ -1,52 +1,32 @@
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 function Home() {
+  const navigate = useNavigate();
   const { rol } = useParams();
 
+  if (rol !== "lideres") return null;
+
+  const liderMock = {
+    nombre: "Carlos Andrés Mena",
+  };
+
   return (
-    <div style={styles.pageContent}>
-      <h1 style={styles.title}>Versículo del Día</h1>
+    <div>
+      <h2>Bienvenido, {liderMock.nombre}</h2>
 
-      <div style={styles.verseContainer}>
-        <p style={styles.verseText}>
-          "Porque de tal manera amó Dios al mundo..."
-          <br />- Juan 3:16
-        </p>
-      </div>
+      <h3>Versículo del Día</h3>
+      <p>
+        "Porque de tal manera amó Dios al mundo..."
+        <br />- Juan 3:16
+      </p>
 
-      {rol === "lideres" && (
-        <p>📋 Aquí podrás registrar asistencia y gestionar clases.</p>
-      )}
+      <br />
 
-      {rol === "padres" && (
-        <p>👨‍👩‍👧 Aquí podrás ver la asistencia de tus hijos.</p>
-      )}
+      <button onClick={() => navigate(`/${rol}/asistencia`)}>
+        Tomar asistencia
+      </button>
     </div>
   );
 }
-
-const styles = {
-  pageContent: {
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "flex-start",
-  },
-  title: {
-    fontSize: "20px",
-    fontWeight: "bold",
-  },
-  verseContainer: {
-    backgroundColor: "#333",
-    color: "white",
-    borderRadius: "12px",
-    padding: "10px 20px",
-    width: "70%",
-    marginTop: "10px",
-  },
-  verseText: {
-    fontFamily: "Georgia, serif",
-    lineHeight: "1.5",
-  },
-};
 
 export default Home;
