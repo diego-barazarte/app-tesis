@@ -1,47 +1,65 @@
-import { Link, useParams } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 function Sidebar() {
-  const { rol } = useParams();
+  const { pathname } = useLocation();
 
-  if (!rol) return null;
+  const esLider = pathname.startsWith("/lideres");
+  const esPadre = pathname.startsWith("/padres");
 
-  const inicioPath =
-    rol === "padres" ? `/${rol}/home-padres` : `/${rol}/home`;
+  if (!esLider && !esPadre) return null;
 
   return (
     <div style={styles.sidebar}>
-      <h3>{rol === "lideres" ? "Líder" : "Padre"}</h3>
+      <h3>{esLider ? "Líder" : "Padre"}</h3>
 
-      <Link to={inicioPath} style={styles.link}>
-        Inicio
-      </Link>
+      {esLider && (
+        <>
+          <Link to="/lideres/home" style={styles.link}>
+            Inicio
+          </Link>
 
-      {rol === "lideres" && (
-        <Link to={`/${rol}/asistencia`} style={styles.link}>
-          Tomar asistencia
-        </Link>
+          <Link to="/lideres/asistencia" style={styles.link}>
+            Asistencia
+          </Link>
+
+          <Link to="/lideres/clases" style={styles.link}>
+            Clases
+          </Link>
+        </>
       )}
 
-      {rol === "padres" && (
-        <Link to={`/${rol}/registro-hijo`} style={styles.link}>
-          Registrar hijo
-        </Link>
-      )}
+      {esPadre && (
+        <>
+          <Link to="/padres/home-padres" style={styles.link}>
+            Inicio
+          </Link>
 
-      <Link to={`/${rol}/profile`} style={styles.link}>
-        Perfil
-      </Link>
+          <Link to="/padres/clases" style={styles.link}>
+            Clases
+          </Link>
+
+          <Link to="/padres/registro-hijo" style={styles.link}>
+            Registrar hijo
+          </Link>
+        </>
+      )}
     </div>
   );
 }
 
+const SIDEBAR_WIDTH = 260;
+
 const styles = {
   sidebar: {
-    width: "15%",
+    width: SIDEBAR_WIDTH,
     backgroundColor: "#222",
     color: "white",
     padding: "20px",
+    position: "fixed",
+    top: 0,
+    left: 0,
     height: "100vh",
+    boxSizing: "border-box",
   },
   link: {
     display: "block",
@@ -50,5 +68,6 @@ const styles = {
     margin: "10px 0",
   },
 };
+
 
 export default Sidebar;
