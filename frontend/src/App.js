@@ -10,6 +10,7 @@ import Asistencia from "./pages/líderes/Asistencia";
 import ClasesLider from "./pages/líderes/ClasesLider";
 import ClaseDetalleLider from "./pages/líderes/ClaseDetalleLider";
 import SemanaClaseLider from "./pages/líderes/SemanaClaseLider";
+import QuizCrear from "./pages/líderes/QuizCrear";
 
 // Padres
 import HomePadres from "./pages/padres/HomePadres";
@@ -17,6 +18,11 @@ import ClasesPadres from "./pages/padres/ClasesPadres";
 import ClaseDetallePadres from "./pages/padres/ClaseDetallePadres";
 import SemanaClasePadres from "./pages/padres/SemanaClasePadres";
 import RegistroHijo from "./pages/padres/RegistroHijo";
+import QuizLista from "./pages/padres/QuizLista";
+import QuizJugador from "./pages/padres/QuizJugador";
+
+
+
 
 function App() {
   return (
@@ -27,26 +33,32 @@ function App() {
 
 
         <Route path="/lideres" element={<Layout />}>
-  <Route path="home" element={<HomeLider />} />
-  <Route path="asistencia" element={<Asistencia />} />
-  <Route path="clases" element={<ClasesLider />} />
-  <Route path="clases/:id" element={<ClaseDetalleLider />} />
-  <Route
-    path="clases/:id/semana/:semana"
-    element={<SemanaClaseLider />}
-  />
-</Route>
+        <Route path="home" element={<HomeLider />} />
+        <Route path="asistencia" element={<Asistencia />} />
+        <Route path="clases" element={<ClasesLider />} />
+        <Route path="clases/:id" element={<ClaseDetalleLider />} />
+        <Route
+          path="clases/:id/semana/:semana"
+          element={<SemanaClaseLider />}
+        />
+           <Route path="clases/:id/semana/:semana/quiz/crear" element={<QuizCrear />} />
+      </Route>
+   
 
-<Route path="/padres" element={<Layout />}>
-  <Route path="home-padres" element={<HomePadres />} />
-  <Route path="clases" element={<ClasesPadres />} />
-  <Route path="clases/:id" element={<ClaseDetallePadres />} />
-  <Route
-    path="clases/:id/semana/:semana"
-    element={<SemanaClasePadres />}
-  />
-  <Route path="registro-hijo" element={<RegistroHijo />} />
-</Route>
+
+      <Route path="/padres" element={<Layout />}>
+        <Route path="home-padres" element={<HomePadres />} />
+        <Route path="clases" element={<ClasesPadres />} />
+        <Route path="clases/:id" element={<ClaseDetallePadres />} />
+        <Route
+          path="clases/:id/semana/:semana"
+          element={<SemanaClasePadres />}
+        />
+        <Route path="registro-hijo" element={<RegistroHijo />} />
+        <Route path="clases/:id/semana/:semana/quizzes" element={<QuizLista />} />
+        <Route path="clases/:id/semana/:semana/quiz/:quizId" element={<QuizJugador />} />
+
+      </Route>
 
 
      

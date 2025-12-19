@@ -1,8 +1,9 @@
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useState } from "react";
 
 function SemanaClaseLider() {
   const { semana } = useParams();
+  const navigate = useNavigate();
   const [tema, setTema] = useState("");
   const [observaciones, setObservaciones] = useState("");
   const [guardado, setGuardado] = useState(false);
@@ -33,6 +34,10 @@ function SemanaClaseLider() {
       <br /><br />
 
       <button onClick={guardar}>Guardar</button>
+      <button onClick={() => navigate("quiz/crear")}>
+      Crear Quiz de la semana
+      </button>
+
 
       {guardado && <p>Información guardada ✔</p>}
     </div>
