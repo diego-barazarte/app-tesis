@@ -14,9 +14,12 @@ db.init_app(app)
 
 from routes.ninos import ninos_bp
 from routes.sesiones import sesiones_bp
+from routes.material import material_bp
 
 app.register_blueprint(ninos_bp, url_prefix="/api/ninos")
 app.register_blueprint(sesiones_bp, url_prefix="/api/sesiones")
+app.register_blueprint(material_bp)
+
 
 @app.route("/")
 def home():

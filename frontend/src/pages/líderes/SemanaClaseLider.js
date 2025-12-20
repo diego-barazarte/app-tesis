@@ -18,7 +18,9 @@ function SemanaClaseLider() {
   const [comentarios, setComentarios] = useState("");
   const [cargando, setCargando] = useState(true);
   const [mensaje, setMensaje] = useState("");
-
+  const [archivo, setArchivo] = useState(null);
+  const [mensajeMaterial, setMensajeMaterial] = useState("");
+  
   const fecha = calcularFecha(Number(semana));
 
   // 🔹 Cargar sesión existente
@@ -58,6 +60,34 @@ function SemanaClaseLider() {
       setMensaje("No se pudo guardar la sesión ❌");
     }
   };
+  const subirMaterial = async () => {
+    setMensajeMaterial("");
+  
+    if (!archivo) {
+      setMensajeMaterial("Seleccione un archivo PDF primero ❌");
+      return;
+    }
+  
+    const formData = new FormData();
+    formData.append("clase_id", id);
+    formData.append("fecha", fecha);
+    formData.append("archivo", archivo);
+  
+    try {
+      const res = await fetch("http://localhost:5000/api/material", {
+        method: "POST",
+        body: formData,
+      });
+  
+      if (!res.ok) throw new Error();
+  
+      setMensajeMaterial("Material subido correctamente ✔");
+      setArchivo(null);
+    } catch {
+      setMensajeMaterial("Error al subir el material ❌");
+    }
+  };
+  
 
   if (cargando) return <p>Cargando sesión...</p>;
 
@@ -87,6 +117,27 @@ function SemanaClaseLider() {
       />
 
       <br /><br />
+
+      <hr />
+
+<h3>Material de la semana</h3>
+
+<input
+  type="file"
+  accept="application/pdf"
+  onChange={(e) => setArchivo(e.target.files[0])}
+/>
+
+<br /><br />
+
+<button onClick={subirMaterial}>
+  Subir material (PDF)
+</button>
+
+{mensajeMaterial && <p>{mensajeMaterial}</p>}
+
+<br /><br />
+
 
       <button onClick={guardar}>
         {tema ? "Actualizar sesión" : "Guardar sesión"}
