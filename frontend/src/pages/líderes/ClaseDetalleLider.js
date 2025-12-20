@@ -1,8 +1,10 @@
-import { useParams, Link } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { clases } from "../../data/clasesMock";
 
 function ClaseDetalleLider() {
   const { id } = useParams();
+  const navigate = useNavigate();
+
   const clase = clases.find(c => c.id === Number(id));
 
   return (
@@ -11,10 +13,14 @@ function ClaseDetalleLider() {
       <h3>Semanas</h3>
 
       {clase.semanas.map((semana) => (
-        <div key={semana.numero}>
-          <Link to={`/lideres/clases/${id}/semana/${semana.numero}`}>
+        <div key={semana.numero} style={{ marginBottom: "10px" }}>
+          <button
+            onClick={() =>
+              navigate(`/lideres/clases/${id}/semana/${semana.numero}`)
+            }
+          >
             Semana {semana.numero}
-          </Link>
+          </button>
         </div>
       ))}
     </div>
