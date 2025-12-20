@@ -1,4 +1,6 @@
-import { Link, useLocation } from "react-router-dom";
+import { Link, NavLink, useLocation } from "react-router-dom";
+
+const SIDEBAR_WIDTH = 260;
 
 function Sidebar() {
   const { pathname } = useLocation();
@@ -9,45 +11,48 @@ function Sidebar() {
   if (!esLider && !esPadre) return null;
 
   return (
-    <div style={styles.sidebar}>
-      <h3>{esLider ? "Líder" : "Padre"}</h3>
+    <aside style={styles.sidebar}>
+      <h3 style={styles.title}>{esLider ? "Líder" : "Padre"}</h3>
 
       {esLider && (
         <>
-          <Link to="/lideres/home" style={styles.link}>
+          <NavLink to="/lideres/home" style={styles.link}>
             Inicio
-          </Link>
+          </NavLink>
 
-          <Link to="/lideres/asistencia" style={styles.link}>
-            Asistencia
-          </Link>
-
-          <Link to="/lideres/clases" style={styles.link}>
+          <NavLink to="/lideres/clases" style={styles.link}>
             Clases
-          </Link>
+          </NavLink>
+
+          {/* NUEVA OPCIÓN */}
+          <NavLink to="/lideres/ninos" style={styles.link}>
+            Estudiantes
+          </NavLink>
+
+          <NavLink to="/lideres/asistencia" style={styles.link}>
+            Asistencia
+          </NavLink>
         </>
       )}
 
       {esPadre && (
         <>
-          <Link to="/padres/home-padres" style={styles.link}>
+          <NavLink to="/padres/home-padres" style={styles.link}>
             Inicio
-          </Link>
+          </NavLink>
 
-          <Link to="/padres/clases" style={styles.link}>
+          <NavLink to="/padres/clases" style={styles.link}>
             Clases
-          </Link>
+          </NavLink>
 
-          <Link to="/padres/registro-hijo" style={styles.link}>
+          <NavLink to="/padres/registro-hijo" style={styles.link}>
             Registrar hijo
-          </Link>
+          </NavLink>
         </>
       )}
-    </div>
+    </aside>
   );
 }
-
-const SIDEBAR_WIDTH = 260;
 
 const styles = {
   sidebar: {
@@ -61,13 +66,18 @@ const styles = {
     height: "100vh",
     boxSizing: "border-box",
   },
+  title: {
+    marginBottom: "20px",
+  },
   link: {
     display: "block",
     color: "white",
     textDecoration: "none",
     margin: "10px 0",
+    padding: "8px",
+    borderRadius: "4px",
   },
 };
 
-
 export default Sidebar;
+export { SIDEBAR_WIDTH };

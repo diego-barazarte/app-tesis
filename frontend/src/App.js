@@ -11,6 +11,9 @@ import ClasesLider from "./pages/líderes/ClasesLider";
 import ClaseDetalleLider from "./pages/líderes/ClaseDetalleLider";
 import SemanaClaseLider from "./pages/líderes/SemanaClaseLider";
 import QuizCrear from "./pages/líderes/QuizCrear";
+import ListaNinos from "./pages/líderes/ListaNinos";
+import DetalleNino from "./pages/líderes/DetalleNino";
+
 
 // Padres
 import HomePadres from "./pages/padres/HomePadres";
@@ -33,6 +36,9 @@ function App() {
 
 
         <Route path="/lideres" element={<Layout />}>
+        <Route path="ninos" element={<ListaNinos />} />
+<Route path="ninos/:id" element={<DetalleNino />} />
+
         <Route path="home" element={<HomeLider />} />
         <Route path="asistencia" element={<Asistencia />} />
         <Route path="clases" element={<ClasesLider />} />

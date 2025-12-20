@@ -42,3 +42,42 @@ def registrar_nino():
         "message": "Niño registrado correctamente",
         "id": nuevo.id
     }), 201
+
+@ninos_bp.route("", methods=["GET"])
+def listar_ninos():
+    clase_id = request.args.get("clase_id")
+
+    if not clase_id:
+        return jsonify({"error": "clase_id requerido"}), 400
+
+    ninos = Nino.query.filter_by(clase_id=clase_id).all()
+
+    resultado = []
+    for n in ninos:
+        resultado.append({
+            "id": n.id,
+            "nombres": n.nombres,
+            "apellidos": n.apellidos,
+            "fecha_nacimiento": n.fecha_nacimiento.isoformat(),
+            "genero": n.genero,
+            "nombre_representante": n.nombre_representante,
+            "telefono": n.telefono
+        })
+
+    return jsonify(resultado)
+@ninos_bp.route("/<int:id>", methods=["GET"])
+def detalle_nino(id):
+    nino = Nino.query.get_or_404(id)
+
+    return jsonify({
+        "id": nino.id,
+        "nombres": nino.nombres,
+        "apellidos": nino.apellidos,
+        "fecha_nacimiento": nino.fecha_nacimiento.isoformat(),
+        "genero": nino.genero,
+        "nombre_representante": nino.nombre_representante,
+        "telefono": nino.telefono,
+        "email": nino.email,
+        "observaciones": nino.observaciones,
+        "clase_id": nino.clase_id
+    })
