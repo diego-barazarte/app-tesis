@@ -1,65 +1,134 @@
 import { useState } from "react";
 
 function RegistroHijo() {
+  const [form, setForm] = useState({
+    nombres: "",
+    apellidos: "",
+    fecha_nacimiento: "",
+    genero: "",
+    nombre_representante: "",
+    telefono: "",
+    email: "",
+    observaciones: "",
+    clase_id: 1
+  });
+
   const [enviado, setEnviado] = useState(false);
 
-  const handleSubmit = (e) => {
+  const handleChange = (e) => {
+    setForm({
+      ...form,
+      [e.target.name]: e.target.value
+    });
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setEnviado(true);
+
+    const res = await fetch("http://localhost:5000/api/ninos", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(form)
+    });
+
+    if (res.ok) setEnviado(true);
   };
 
   if (enviado) {
     return (
       <div>
         <h2>Registro exitoso 🙌</h2>
-        <p>
-          Tu hijo ha sido registrado correctamente en las clases dominicales.
-          Un líder se pondrá en contacto contigo si es necesario.
-        </p>
+        <p>Tu hijo ha sido registrado correctamente en la clase dominical.</p>
       </div>
     );
   }
 
   return (
-    <div>
+    <div style={{ maxWidth: "600px" }}>
       <h2>Registro de Niño – Clases Dominicales</h2>
 
       <form onSubmit={handleSubmit}>
-        <h4>Datos del niño</h4>
 
-        <input placeholder="Nombres del niño" required />
-        <br /><br />
+        <h3>📘 Datos del niño</h3>
 
-        <input placeholder="Apellidos del niño" required />
-        <br /><br />
+        <label>Nombres</label><br />
+        <input
+          name="nombres"
+          placeholder="Ej: Juan Pablo"
+          maxLength={100}
+          required
+          onChange={handleChange}
+        /><br /><br />
 
-        <input type="date" required />
-        <br /><br />
+        <label>Apellidos</label><br />
+        <input
+          name="apellidos"
+          placeholder="Ej: Pérez Gómez"
+          maxLength={100}
+          required
+          onChange={handleChange}
+        /><br /><br />
 
-        <select required>
-          <option value="">Seleccione género</option>
-          <option>Masculino</option>
-          <option>Femenino</option>
+        <label>Fecha de nacimiento</label><br />
+        <input
+          type="date"
+          name="fecha_nacimiento"
+          required
+          onChange={handleChange}
+        /><br /><br />
+
+        <label>Género</label><br />
+        <select
+          name="genero"
+          required
+          onChange={handleChange}
+        >
+          <option value="">Seleccione una opción</option>
+          <option value="Masculino">Masculino</option>
+          <option value="Femenino">Femenino</option>
         </select>
 
         <br /><br />
 
-        <h4>Datos del padre/madre o tutor</h4>
+        <h3>👨‍👩‍👦 Datos del representante</h3>
 
-        <input placeholder="Nombre del representante" required />
+        <label>Nombre completo</label><br />
+        <input
+          name="nombre_representante"
+          placeholder="Nombre del padre, madre o tutor"
+          maxLength={150}
+          required
+          onChange={handleChange}
+        /><br /><br />
+
+        <label>Teléfono de contacto</label><br />
+        <input
+          name="telefono"
+          placeholder="Ej: 0991234567"
+          maxLength={20}
+          required
+          onChange={handleChange}
+        /><br /><br />
+
+        <label>Correo electrónico (opcional)</label><br />
+        <input
+          type="email"
+          name="email"
+          placeholder="correo@ejemplo.com"
+          maxLength={150}
+          onChange={handleChange}
+        />
+
         <br /><br />
 
-        <input placeholder="Teléfono de contacto" required />
-        <br /><br />
+        <h3>📝 Información adicional</h3>
 
-        <input type="email" placeholder="Correo electrónico" />
-        <br /><br />
-
-        <h4>Información adicional</h4>
-
+        <label>Alergias, condiciones médicas u observaciones</label><br />
         <textarea
-          placeholder="Alergias, condiciones médicas, observaciones"
+          name="observaciones"
+          placeholder="Ej: alérgico a la maní, asma, etc."
           rows="4"
+          onChange={handleChange}
         />
 
         <br /><br />
