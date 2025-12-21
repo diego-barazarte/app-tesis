@@ -1,6 +1,9 @@
 from flask import Flask
 from flask_cors import CORS
 from db import db
+from flask import send_from_directory
+import os
+
 
 app = Flask(__name__)
 CORS(app)
@@ -20,6 +23,13 @@ app.register_blueprint(ninos_bp, url_prefix="/api/ninos")
 app.register_blueprint(sesiones_bp, url_prefix="/api/sesiones")
 app.register_blueprint(material_bp)
 
+@app.route("/uploads/<path:filename>")
+def descargar_archivo(filename):
+    return send_from_directory(
+        os.path.join(app.root_path, "uploads"),
+        filename,
+        as_attachment=False
+    )
 
 @app.route("/")
 def home():

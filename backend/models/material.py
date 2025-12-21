@@ -1,5 +1,5 @@
 from db import db
-from datetime import date
+from datetime import datetime
 
 class MaterialClase(db.Model):
     __tablename__ = "material_clase"
@@ -10,5 +10,6 @@ class MaterialClase(db.Model):
 
     nombre_archivo = db.Column(db.String(255), nullable=False)
     ruta_archivo = db.Column(db.String(255), nullable=False)
+    tipo = db.Column(db.String(50), nullable=False)
 
-    fecha_subida = db.Column(db.Date, default=date.today)
+    fecha_subida = db.Column(db.DateTime, default=datetime.utcnow)
