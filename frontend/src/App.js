@@ -48,6 +48,9 @@ function App() {
           element={<SemanaClaseLider />}
         />
            <Route path="clases/:id/semana/:semana/quiz/crear" element={<QuizCrear />} />
+           <Route path="/lideres/clases/:id/semana/:semana/asistencia" element={<Asistencia />}
+/>
+
       </Route>
    
 

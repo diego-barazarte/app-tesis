@@ -81,3 +81,17 @@ def detalle_nino(id):
         "observaciones": nino.observaciones,
         "clase_id": nino.clase_id
     })
+
+@ninos_bp.route("/por-clase/<int:clase_id>", methods=["GET"])
+def listar_ninos_por_clase(clase_id):
+    ninos = Nino.query.filter_by(clase_id=clase_id).order_by(
+        Nino.apellidos, Nino.nombres
+    ).all()
+
+    return jsonify([
+        {
+            "id": n.id,
+            "nombre": f"{n.nombres} {n.apellidos}"
+        }
+        for n in ninos
+    ])

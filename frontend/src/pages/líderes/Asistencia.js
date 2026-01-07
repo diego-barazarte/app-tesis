@@ -1,67 +1,47 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-
-const niñosMock = [
-  "Mateo Rodríguez",
-  "Sofía Paredes",
-  "Juan Pablo Vera",
-  "Emily Zambrano",
-  "Daniel Torres",
-  "Valentina Cedeño",
-  "Sebastián López",
-  "Isabella Guerrero",
-  "Nicolás Andrade",
-  "Camila Ríos",
-  "Samuel Ayala",
-  "Martina Bravo",
-];
+import { useEffect, useState } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 
 function Asistencia() {
+  const { id, semana } = useParams();
   const navigate = useNavigate();
 
+  const [ninos, setNinos] = useState([]);
+  const [cargando, setCargando] = useState(true);
+  const [error, setError] = useState("");
 
-  const [asistencia, setAsistencia] = useState(
-    niñosMock.map((nombre) => ({
-      nombre,
-      presente: false,
-    }))
-  );
+  useEffect(() => {
+    fetch(`http://localhost:5000/api/ninos/por-clase/${id}`)
+      .then((res) => {
+        if (!res.ok) throw new Error();
+        return res.json();
+      })
+      .then((data) => {
+        setNinos(data);
+        setCargando(false);
+      })
+      .catch(() => {
+        setError("No se pudo cargar la lista de niños");
+        setCargando(false);
+      });
+  }, []);
 
- 
-  const toggleAsistencia = (index) => {
-    const copia = [...asistencia];
-    copia[index].presente = !copia[index].presente;
-    setAsistencia(copia);
-  };
-
-
-  const guardarAsistencia = () => {
-    console.log("Asistencia guardada:", asistencia);
-    navigate(-1);
-  };
+  if (cargando) return <p>Cargando lista...</p>;
+  if (error) return <p>{error}</p>;
 
   return (
     <div>
-      <h2>Tomar asistencia</h2>
+      <h2>Asistencia – Semana {semana}</h2>
 
-      <table border="1" cellPadding="10">
+      <table border="1" cellPadding="10" style={{ width: "100%" }}>
         <thead>
           <tr>
-            <th>Nombre</th>
-            <th>Presente</th>
+            <th>Nombre del estudiante</th>
           </tr>
         </thead>
         <tbody>
-          {asistencia.map((niño, index) => (
-            <tr key={index}>
-              <td>{niño.nombre}</td>
-              <td style={{ textAlign: "center" }}>
-                <input
-                  type="checkbox"
-                  checked={niño.presente} 
-                  onChange={() => toggleAsistencia(index)}
-                />
-              </td>
+          {ninos.map((nino) => (
+            <tr key={nino.id}>
+              <td>{nino.nombre}</td>
             </tr>
           ))}
         </tbody>
@@ -69,9 +49,8 @@ function Asistencia() {
 
       <br />
 
-      <button onClick={guardarAsistencia}>Guardar asistencia</button>
-      <button onClick={() => navigate(-1)} style={{ marginLeft: "10px" }}>
-        Volver
+      <button onClick={() => navigate(-1)}>
+        Volver a la semana
       </button>
     </div>
   );
