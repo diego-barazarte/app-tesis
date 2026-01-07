@@ -24,14 +24,10 @@ function Sidebar() {
             Clases
           </NavLink>
 
-          {/* NUEVA OPCIÓN */}
           <NavLink to="/lideres/ninos" style={styles.link}>
             Estudiantes
           </NavLink>
 
-          <NavLink to="/lideres/asistencia" style={styles.link}>
-            Asistencia
-          </NavLink>
         </>
       )}
 

@@ -150,6 +150,14 @@ function SemanaClaseLider() {
         Crear Quiz de la semana
       </button>
 
+      <button
+        style={{ marginLeft: "10px" }}
+        onClick={() => navigate(`/lideres/clases/${id}/semana/${semana}/asistencia`)}
+      >
+        Tomar asistencia
+      </button>
+
+
       {mensaje && <p>{mensaje}</p>}
     </div>
   );
