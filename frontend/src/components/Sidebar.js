@@ -1,4 +1,4 @@
-import { Link, NavLink, useLocation } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 
 const SIDEBAR_WIDTH = 260;
 
@@ -28,6 +28,9 @@ function Sidebar() {
             Estudiantes
           </NavLink>
 
+          <NavLink to="/lideres/reportes/asistencia" style={styles.link}>
+            Reportes de Asistencia
+          </NavLink>
         </>
       )}
 
@@ -42,7 +45,7 @@ function Sidebar() {
           </NavLink>
 
           <NavLink to="/padres/registro-hijo" style={styles.link}>
-            Registrar hijo
+            Registrar Hijo
           </NavLink>
         </>
       )}

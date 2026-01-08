@@ -13,6 +13,8 @@ import SemanaClaseLider from "./pages/líderes/SemanaClaseLider";
 import QuizCrear from "./pages/líderes/QuizCrear";
 import ListaNinos from "./pages/líderes/ListaNinos";
 import DetalleNino from "./pages/líderes/DetalleNino";
+import ReporteAsistenciaLider from "./pages/líderes/ReporteAsistenciaLider";
+
 
 
 // Padres
@@ -48,8 +50,9 @@ function App() {
           element={<SemanaClaseLider />}
         />
            <Route path="clases/:id/semana/:semana/quiz/crear" element={<QuizCrear />} />
-           <Route path="/lideres/clases/:id/semana/:semana/asistencia" element={<Asistencia />}
-/>
+           <Route path="/lideres/clases/:id/semana/:semana/asistencia" element={<Asistencia />} />
+           <Route path="/lideres/reportes/asistencia" element={<ReporteAsistenciaLider />} />
+
 
       </Route>
    
