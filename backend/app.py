@@ -19,7 +19,10 @@ from routes.ninos import ninos_bp
 from routes.sesiones import sesiones_bp
 from routes.material import material_bp
 from routes.asistencias import asistencias_bp
+from routes.clases import clases_bp
 
+
+app.register_blueprint(clases_bp, url_prefix="/api/clases")
 app.register_blueprint(asistencias_bp, url_prefix="/api/asistencias")
 app.register_blueprint(ninos_bp, url_prefix="/api/ninos")
 app.register_blueprint(sesiones_bp, url_prefix="/api/sesiones")

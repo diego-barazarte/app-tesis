@@ -14,6 +14,8 @@ import QuizCrear from "./pages/líderes/QuizCrear";
 import ListaNinos from "./pages/líderes/ListaNinos";
 import DetalleNino from "./pages/líderes/DetalleNino";
 import ReporteAsistenciaLider from "./pages/líderes/ReporteAsistenciaLider";
+import ReporteAsistenciaSemana from "./pages/líderes/ReporteAsistenciaSemana";
+
 
 
 
@@ -52,6 +54,8 @@ function App() {
            <Route path="clases/:id/semana/:semana/quiz/crear" element={<QuizCrear />} />
            <Route path="/lideres/clases/:id/semana/:semana/asistencia" element={<Asistencia />} />
            <Route path="/lideres/reportes/asistencia" element={<ReporteAsistenciaLider />} />
+           <Route path="reportes/asistencia/clase/:id/semana/:semana" 
+            element={<ReporteAsistenciaSemana />} />
 
 
       </Route>

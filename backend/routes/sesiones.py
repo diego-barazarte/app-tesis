@@ -60,3 +60,19 @@ def guardar_sesion():
     except Exception as e:
         print("ERROR GUARDANDO SESIÓN:", e)
         return {"error": "Error interno"}, 500
+    
+@sesiones_bp.route("/clase/<int:clase_id>", methods=["GET"])
+def listar_sesiones(clase_id):
+    sesiones = SesionClase.query.filter_by(
+        clase_id=clase_id
+    ).order_by(SesionClase.fecha).all()
+
+    return jsonify([
+        {
+            "id": s.id,
+            "fecha": s.fecha.isoformat(),
+            "tema": s.tema
+        }
+        for s in sesiones
+    ])
+
