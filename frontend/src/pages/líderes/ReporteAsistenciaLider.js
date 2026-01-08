@@ -1,70 +1,84 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
+const FECHA_INICIO = "2025-01-05";
+
+function calcularFecha(semana) {
+  const base = new Date(FECHA_INICIO);
+  base.setDate(base.getDate() + (semana - 1) * 7);
+  return base.toISOString().split("T")[0];
+}
+
 function ReporteAsistenciaLider() {
   const navigate = useNavigate();
 
   const [clases, setClases] = useState([]);
-  const [claseId, setClaseId] = useState("");
-  const [sesiones, setSesiones] = useState([]);
+  const [claseSeleccionada, setClaseSeleccionada] = useState("");
+
+  const semanas = Array.from({ length: 12 }, (_, i) => i + 1);
 
   // 🔹 Cargar clases
   useEffect(() => {
     fetch("http://localhost:5000/api/clases")
       .then(res => res.json())
-      .then(setClases);
+      .then(data => setClases(data))
+      .catch(() => setClases([]));
   }, []);
-
-  // 🔹 Cargar sesiones de la clase
-  useEffect(() => {
-    if (!claseId) return;
-
-    fetch(`http://localhost:5000/api/sesiones/clase/${claseId}`)
-      .then(res => res.json())
-      .then(setSesiones);
-  }, [claseId]);
 
   return (
     <div>
       <h2>Reportes de asistencia</h2>
 
-      <label><strong>Clase</strong></label><br />
-      <select value={claseId} onChange={e => setClaseId(e.target.value)}>
-        <option value="">Seleccione</option>
-        {clases.map(c => (
-          <option key={c.id} value={c.id}>{c.nombre}</option>
+      <label><strong>Seleccione una clase</strong></label>
+      <br />
+
+      <select
+        value={claseSeleccionada}
+        onChange={(e) => setClaseSeleccionada(e.target.value)}
+      >
+        <option value="">-- Seleccione --</option>
+        {clases.map((c) => (
+          <option key={c.id} value={c.id}>
+            {c.nombre}
+          </option>
         ))}
       </select>
 
       <br /><br />
 
-      {sesiones.length > 0 && (
-        <table border="1" cellPadding="8">
-          <thead>
-            <tr>
-              <th>Fecha</th>
-              <th>Tema</th>
-              <th>Acción</th>
-            </tr>
-          </thead>
-          <tbody>
-            {sesiones.map(s => (
-              <tr key={s.id}>
-                <td>{s.fecha}</td>
-                <td>{s.tema}</td>
-                <td>
-                  <button
-                    onClick={() =>
-                      navigate(`/lideres/reportes/asistencia/${claseId}/${s.fecha}`)
-                    }
-                  >
-                    Ver asistencia
-                  </button>
-                </td>
+      {claseSeleccionada && (
+        <>
+          <h3>Sesiones registradas</h3>
+
+          <table border="1" cellPadding="8">
+            <thead>
+              <tr>
+                <th>Semana</th>
+                <th>Fecha</th>
+                <th>Acción</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {semanas.map((semana) => (
+                <tr key={semana}>
+                  <td>Semana {semana}</td>
+                  <td>{calcularFecha(semana)}</td>
+                  <td>
+                    <button
+                      onClick={() =>
+                        navigate(
+                          `/lideres/reportes/asistencia/clase/${claseSeleccionada}/semana/${semana}`
+                        )
+                      }
+                    >
+                      Ver asistencia
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </>
       )}
     </div>
   );

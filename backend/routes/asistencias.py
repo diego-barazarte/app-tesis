@@ -2,9 +2,10 @@ from flask import Blueprint, request, jsonify
 from db import db
 from datetime import datetime
 from models.asistencia import Asistencia
-from routes.ninos import Nino  
+from routes.ninos import Nino
 
 asistencias_bp = Blueprint("asistencias", __name__)
+
 
 @asistencias_bp.route("", methods=["GET"])
 def obtener_asistencia():
@@ -38,3 +39,38 @@ def obtener_asistencia():
         }
         for r in registros
     ])
+
+
+@asistencias_bp.route("", methods=["POST"])
+def guardar_asistencia():
+    data = request.json
+
+    try:
+        clase_id = data["clase_id"]
+        fecha = datetime.strptime(data["fecha"], "%Y-%m-%d").date()
+        asistencias = data["asistencias"]  # 👈 CLAVE CORRECTA
+
+        for item in asistencias:
+            registro = Asistencia.query.filter_by(
+                clase_id=clase_id,
+                nino_id=item["nino_id"],
+                fecha=fecha
+            ).first()
+
+            if registro:
+                registro.presente = item["presente"]
+            else:
+                nuevo = Asistencia(
+                    clase_id=clase_id,
+                    nino_id=item["nino_id"],
+                    fecha=fecha,
+                    presente=item["presente"]
+                )
+                db.session.add(nuevo)
+
+        db.session.commit()
+        return {"message": "Asistencia guardada correctamente"}, 201
+
+    except Exception as e:
+        print("ERROR GUARDANDO ASISTENCIA:", e)
+        return {"error": "Error interno"}, 500
