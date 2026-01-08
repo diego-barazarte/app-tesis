@@ -18,7 +18,7 @@ def obtener_asistencia():
     fecha = datetime.strptime(fecha, "%Y-%m-%d").date()
 
     registros = db.session.query(
-        Nino.id,
+        Nino.id.label("nino_id"),
         Nino.nombres,
         Nino.apellidos,
         Asistencia.presente
@@ -33,22 +33,22 @@ def obtener_asistencia():
 
     return jsonify([
         {
-            "nino_id": r.id,
+            "nino_id": r.nino_id,
             "nombre": f"{r.nombres} {r.apellidos}",
-            "presente": bool(r.presente) if r.presente is not None else False
+            "registrado": r.presente is not None,
+            "presente": r.presente
         }
         for r in registros
     ])
 
-
 @asistencias_bp.route("", methods=["POST"])
 def guardar_asistencia():
-    data = request.json
-
     try:
+        data = request.json
+
         clase_id = data["clase_id"]
         fecha = datetime.strptime(data["fecha"], "%Y-%m-%d").date()
-        asistencias = data["asistencias"]  # 👈 CLAVE CORRECTA
+        asistencias = data["asistencias"]
 
         for item in asistencias:
             registro = Asistencia.query.filter_by(
@@ -73,4 +73,5 @@ def guardar_asistencia():
 
     except Exception as e:
         print("ERROR GUARDANDO ASISTENCIA:", e)
+        db.session.rollback()
         return {"error": "Error interno"}, 500

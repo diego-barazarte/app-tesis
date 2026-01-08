@@ -5,27 +5,29 @@ const FECHA_INICIO = "2025-01-05";
 
 function calcularFecha(semana) {
   const base = new Date(FECHA_INICIO);
-  base.setDate(base.getDate() + (semana - 1) * 7);
+  base.setDate(base.getDate() + (Number(semana) - 1) * 7);
   return base.toISOString().split("T")[0];
 }
 
 function ReporteAsistenciaSemana() {
   const { id, semana } = useParams();
 
-  const [ninos, setNinos] = useState([]);
+  const [registros, setRegistros] = useState([]);
   const [cargando, setCargando] = useState(true);
 
-  const fecha = calcularFecha(Number(semana));
+  const fecha = calcularFecha(semana);
 
   useEffect(() => {
-    fetch(`http://localhost:5000/api/ninos?clase_id=${id}`)
+    fetch(
+      `http://localhost:5000/api/asistencias?clase_id=${id}&fecha=${fecha}`
+    )
       .then(res => res.json())
       .then(data => {
-        setNinos(data);
+        setRegistros(data);
         setCargando(false);
       })
       .catch(() => setCargando(false));
-  }, [id]);
+  }, [id, fecha]);
 
   if (cargando) return <p>Cargando reporte...</p>;
 
@@ -35,7 +37,7 @@ function ReporteAsistenciaSemana() {
       <p><strong>Semana:</strong> {semana}</p>
       <p><strong>Fecha:</strong> {fecha}</p>
 
-      <table border="1" cellPadding="8">
+      <table border="1" cellPadding="8" style={{ width: "100%" }}>
         <thead>
           <tr>
             <th>Estudiante</th>
@@ -43,20 +45,26 @@ function ReporteAsistenciaSemana() {
           </tr>
         </thead>
         <tbody>
-          {ninos.map((n) => (
-            <tr key={n.id}>
-              <td>{n.nombres} {n.apellidos}</td>
-              <td>
-                <span style={{ color: "gray" }}>
-                  No registrado
-                </span>
+          {registros.map((r) => (
+            <tr key={r.nino_id}>
+              <td>{r.nombre}</td>
+              <td style={{ textAlign: "center", fontWeight: "bold" }}>
+                {!r.registrado && (
+                  <span style={{ color: "gray" }}>No registrado</span>
+                )}
+                {r.registrado && r.presente && (
+                  <span style={{ color: "green" }}>Presente</span>
+                )}
+                {r.registrado && !r.presente && (
+                  <span style={{ color: "red" }}>Ausente</span>
+                )}
               </td>
             </tr>
           ))}
         </tbody>
       </table>
 
-      {ninos.length === 0 && (
+      {registros.length === 0 && (
         <p>No hay estudiantes registrados en esta clase.</p>
       )}
     </div>
