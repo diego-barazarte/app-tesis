@@ -1,7 +1,6 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 
-// Primer domingo de la clase
 const FECHA_INICIO = "2025-01-05";
 
 function calcularFecha(semana) {
@@ -37,7 +36,6 @@ function SemanaClaseLider() {
       .catch(() => setCargando(false));
   }, [id, fecha]);
 
-  // 🔹 Guardar o actualizar
   const guardar = async () => {
     setMensaje("");
 

@@ -9,9 +9,6 @@ material_bp = Blueprint("material", __name__, url_prefix="/api/material")
 UPLOAD_FOLDER = "uploads/material"
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
-# ==========================
-# SUBIR MATERIAL (LÍDER)
-# ==========================
 @material_bp.route("", methods=["POST"])
 def subir_material():
     try:
@@ -42,10 +39,6 @@ def subir_material():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
-
-# ==========================
-# OBTENER MATERIAL (PADRES / LÍDER)
-# ==========================
 @material_bp.route("", methods=["GET"])
 def obtener_material():
     clase_id = request.args.get("clase_id")
@@ -69,10 +62,6 @@ def obtener_material():
         for m in materiales
     ])
 
-
-# ==========================
-# ELIMINAR MATERIAL (LÍDER)
-# ==========================
 @material_bp.route("/<int:id>", methods=["DELETE"])
 def eliminar_material(id):
     material = MaterialClase.query.get_or_404(id)

@@ -5,7 +5,6 @@ from datetime import datetime
 
 sesiones_bp = Blueprint("sesiones", __name__)
 
-# ================= OBTENER SESIÓN =================
 @sesiones_bp.route("/<int:clase_id>", methods=["GET"])
 def obtener_sesion(clase_id):
     fecha = request.args.get("fecha")
@@ -27,8 +26,6 @@ def obtener_sesion(clase_id):
         "comentarios": sesion.comentarios
     })
 
-
-# ================= CREAR / ACTUALIZAR =================
 @sesiones_bp.route("", methods=["POST"])
 def guardar_sesion():
     data = request.json

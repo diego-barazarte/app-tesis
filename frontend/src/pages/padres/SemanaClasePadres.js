@@ -1,7 +1,6 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 
-// Fecha base
 const FECHA_INICIO = "2025-01-05";
 
 function calcularFecha(semana) {

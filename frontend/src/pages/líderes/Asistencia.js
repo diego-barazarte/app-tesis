@@ -19,7 +19,6 @@ function Asistencia() {
   const [cargando, setCargando] = useState(true);
   const [mensaje, setMensaje] = useState("");
 
-  // 🔹 Cargar niños de la clase
   useEffect(() => {
     fetch(`http://localhost:5000/api/ninos?clase_id=${id}`)
       .then(res => res.json())

@@ -17,7 +17,6 @@ function ReporteAsistenciaLider() {
 
   const semanas = Array.from({ length: 12 }, (_, i) => i + 1);
 
-  // 🔹 Cargar clases
   useEffect(() => {
     fetch("http://localhost:5000/api/clases")
       .then(res => res.json())
