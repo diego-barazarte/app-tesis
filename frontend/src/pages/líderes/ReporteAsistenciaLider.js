@@ -49,6 +49,11 @@ function ReporteAsistenciaLider() {
         <>
           <h3>Sesiones registradas</h3>
 
+          <button onClick={() => window.open(
+                      `http://localhost:5000/api/asistencias/reporte/pdf?clase_id=${claseSeleccionada}`, "_blank")}>
+                      Exportar PDF
+          </button>
+
           <table border="1" cellPadding="8">
             <thead>
               <tr>
