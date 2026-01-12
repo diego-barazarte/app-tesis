@@ -1,8 +1,18 @@
 import { useState } from "react";
 import { useParams } from "react-router-dom";
 
+const FECHA_INICIO = "2025-01-05";
+
+function calcularFecha(semana) {
+  const base = new Date(FECHA_INICIO);
+  base.setDate(base.getDate() + (semana - 1) * 7);
+  return base.toISOString().split("T")[0];
+}
+
+
 function QuizCrear() {
-  const { id } = useParams(); // clase_id
+  const { id, semana} = useParams();
+  const fecha = calcularFecha(Number(semana));
   const [titulo, setTitulo] = useState("");
   const [preguntas, setPreguntas] = useState([]);
 
@@ -24,6 +34,7 @@ function QuizCrear() {
       body: JSON.stringify({
         clase_id: Number(id),
         titulo,
+        fecha,
         preguntas,
       }),
     });

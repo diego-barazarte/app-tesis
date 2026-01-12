@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate} from "react-router-dom";
 import { useEffect, useState } from "react";
 
 const FECHA_INICIO = "2025-01-05";
@@ -10,6 +10,7 @@ function calcularFecha(semana) {
 }
 
 function SemanaClasePadres() {
+  const navigate = useNavigate();
   const { id, semana } = useParams();
 
   const [tema, setTema] = useState("");
@@ -59,6 +60,14 @@ function SemanaClasePadres() {
           </li>
         ))}
       </ul>
+
+      <hr />
+
+        <h3>Quiz de la semana</h3>
+
+        <button onClick={() => navigate(`/padres/clases/${id}/semana/${semana}/quiz`)}>
+            📝 Realizar quiz
+        </button>
     </div>
   );
 }

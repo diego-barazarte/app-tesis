@@ -22,9 +22,7 @@ import ClasesPadres from "./pages/padres/ClasesPadres";
 import ClaseDetallePadres from "./pages/padres/ClaseDetallePadres";
 import SemanaClasePadres from "./pages/padres/SemanaClasePadres";
 import RegistroHijo from "./pages/padres/RegistroHijo";
-import QuizLista from "./pages/padres/QuizLista";
-import QuizJugador from "./pages/padres/QuizJugador";
-
+import QuizVer from "./pages/padres/QuizVer";
 
 
 function App() {
@@ -56,10 +54,9 @@ function App() {
         <Route path="clases/:id" element={<ClaseDetallePadres />} />
         <Route path="clases/:id/semana/:semana" element={<SemanaClasePadres />}  />
         <Route path="registro-hijo" element={<RegistroHijo />} />
-        <Route path="clases/:id/semana/:semana/quizzes" element={<QuizLista />} />
-        <Route path="clases/:id/semana/:semana/quiz/:quizId" element={<QuizJugador />} />
-      </Route>
+        <Route path="/padres/clases/:id/semana/:semana/quiz" element={<QuizVer />} />
 
+      </Route>
 
       </Routes>
     </BrowserRouter>
