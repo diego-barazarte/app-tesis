@@ -46,7 +46,6 @@ function QuizCrear() {
     <div style={{ maxWidth: "700px" }}>
       <h2>Crear Quiz</h2>
   
-      {/* 🔹 Título */}
       <div style={{ marginBottom: "20px" }}>
         <input
           style={{ width: "100%", padding: "8px" }}
