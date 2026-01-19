@@ -56,7 +56,6 @@ function QuizCrear() {
         />
       </div>
   
-      {/* 🔹 Preguntas */}
       {preguntas.map((p, i) => (
         <div
           key={i}
@@ -66,7 +65,6 @@ function QuizCrear() {
             marginBottom: "20px",
           }}
         >
-          {/* Pregunta */}
           <input
             style={{
               width: "100%",
@@ -80,8 +78,6 @@ function QuizCrear() {
               setPreguntas(copia);
             }}
           />
-  
-          {/* Opciones */}
           {p.opciones.map((_, j) => (
             <div key={j} style={{ marginBottom: "6px" }}>
               <input
@@ -96,7 +92,6 @@ function QuizCrear() {
             </div>
           ))}
   
-          {/* Correcta */}
           <select
             style={{ marginTop: "8px" }}
             onChange={(e) => {
